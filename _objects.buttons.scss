@@ -37,6 +37,8 @@ $inuit-global-border-box: false !default;
 
 
 
+
+
 /**
  * 1. Allow us to style box model properties.
  * 2. Line different sized buttons up a little nicer.
@@ -46,8 +48,15 @@ $inuit-global-border-box: false !default;
  * 5. Force all button-styled elements to appear clickable.
  * 6. Fixes odd inner spacing in IE7.
  * 7. Subtract the border size from the padding value so that buttons do not
- *    grow larger as we add borders.
- */
+ *    grow larger as we add borders. 
+ */ 
+ 
+ // Mixin to DRY up point [7]
+ @mixin button-padding($inuit-btn-padding, $inuit-btn-border-width){
+  padding: $inuit-btn-padding - $inuit-btn-border-width  double($inuit-btn-padding) - $inuit-btn-border-width;
+}  
+
+
 .#{$inuit-btn-namespace}btn,
 %#{$inuit-btn-namespace}btn {
     display: inline-block; /* [1] */
@@ -57,7 +66,7 @@ $inuit-global-border-box: false !default;
     margin:  0; /* [4] */
     cursor: pointer; /* [5] */
     overflow: visible; /* [6] */
-    padding: $inuit-btn-padding - $inuit-btn-border-width  double($inuit-btn-padding) - $inuit-btn-border-width; /* [7] */
+    @include button-padding; /* [7] */
     background-color: $inuit-btn-background;
 
     @if($inuit-btn-border-width != 0) {
@@ -101,7 +110,7 @@ $inuit-global-border-box: false !default;
 
     .#{$inuit-btn-namespace}btn--small,
     %#{$inuit-btn-namespace}btn--small {
-        padding: $inuit-btn-padding--small - $inuit-btn-border-width  double($inuit-btn-padding--small) - $inuit-btn-border-width; /* [7] */
+            @include button-padding($inuit-btn-padding--small); /* [7] */
     }
 
 }
@@ -114,7 +123,7 @@ $inuit-global-border-box: false !default;
 
     .#{$inuit-btn-namespace}btn--large,
     %#{$inuit-btn-namespace}btn--large {
-        padding: $inuit-btn-padding--large - $inuit-btn-border-width  double($inuit-btn-padding--large) - $inuit-btn-border-width; /* [7] */
+            @include button-padding($inuit-btn-padding--large); /* [7] */
     }
 
 }
